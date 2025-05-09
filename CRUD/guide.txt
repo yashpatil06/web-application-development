@@ -1,0 +1,8 @@
+npm install mongoose express
+
+npm install -g nodemon
+
+nodemon index.js
+
+Open Postman and do all methods on belwo link
+http://localhost:3000/api/users

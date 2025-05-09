@@ -1,0 +1,126 @@
+
+CRUD API using Node.js + Express + MongoDB (with Mongoose)
+
+Step 1: Project Setup
+---------------------
+mkdir crud-api
+cd crud-api
+npm init -y
+npm install express mongoose body-parser
+
+Step 2: Create index.js
+------------------------
+Create a file named index.js and paste the following code:
+
+----------------------------------------------------------
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
+const app = express();
+const PORT = 3000;
+app.use(bodyParser.json());
+
+mongoose.connect('mongodb://localhost:27017/userdb', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}).then(() => console.log("Connected successfully"))
+  .catch(err => console.log("Error: ", err));
+
+const userSchema = new mongoose.Schema({
+    name: { type: String },
+    email: { type: String },
+    age: Number
+});
+
+const User = mongoose.model('User', userSchema);
+
+// Create
+app.post('/users', async (req, res) => {
+    try {
+        const user = new User(req.body);
+        await user.save();
+        res.status(201).send(user);
+    } catch (err) {
+        res.status(400).send(err.message);
+    }
+});
+
+// Read
+app.get('/users', async (req, res) => {
+    try {
+        const users = await User.find();
+        res.send(users);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+// Update
+app.put('/users/:id', async (req, res) => {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true, runValidators: true }
+        );
+        res.send(updatedUser);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+// Delete
+app.delete('/users/:id', async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        res.send("User deleted");
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
+----------------------------------------------------------
+
+Step 3: Run the Server
+----------------------
+Make sure MongoDB is running. Then run:
+node index.js
+
+Step 4: Use Postman to Test API
+-------------------------------
+1. POST - Create User:
+   URL: http://localhost:3000/users
+   Body (raw JSON):
+   {
+       "name": "Apurva",
+       "email": "apurvasanap@gmail.com",
+       "age": 21
+   }
+
+2. GET - Read Users:
+   URL: http://localhost:3000/users
+
+3. PUT - Update User:
+   URL: http://localhost:3000/users/<user_id> /get - <user id> 
+   Body (raw JSON):
+   {
+       "name": "Apurva",
+       "email": "apurvasanap@gmail.com",
+       "age": 22
+   }
+
+4. DELETE - Delete User:
+   URL: http://localhost:3000/users/<user_id>
+
+Step 5: Use MongoDB Compass
+---------------------------
+1. Open MongoDB Compass and connect using:
+   mongodb://localhost:27017
+
+2. Open 'userdb' database and 'users' collection.
+
+3. You can view, insert, update, and delete documents manually.
