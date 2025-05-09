@@ -1,0 +1,67 @@
+Practical: Create EC2 Instance on AWS and Set Up Apache Webserver
+
+Step 1: Launch EC2 Instance
+---------------------------
+1. Go to AWS Console → Services → EC2 → Launch Instance.
+2. Set the instance name → Example: Apache-Server
+3. Choose OS: Select Ubuntu (e.g., Ubuntu Server 22.04 LTS).
+4. Choose Instance Type: Select t2.micro (Free Tier eligible).
+5. Key Pair: Select an existing key pair or create a new one.
+   - Download the .pem file if creating a new key pair.
+6. Configure Network Settings:
+   ✅ Allow SSH  
+   ✅ Allow HTTP  
+   ✅ Allow HTTPS  
+7. Click “Launch Instance”.
+
+Step 2: Connect to the Instance
+-------------------------------
+1. Go to the EC2 Dashboard → Click your instance → Click “Connect”.
+2. Copy the public IP address.
+3. Click “Connect” → A web-based terminal opens with Ubuntu CLI access.
+
+Step 3: Install Apache Web Server
+---------------------------------
+Run the following commands in the Ubuntu terminal:
+
+    sudo apt update
+    sudo apt install apache2 -y
+    sudo systemctl start apache2
+    sudo systemctl enable apache2
+    apache2 -v  # Check Apache version
+
+Step 4: Verify Apache Web Server
+--------------------------------
+1. Open your browser and go to:
+
+       http://<your-public-IP-address>
+
+2. You should see the Apache default welcome page.
+
+Step 5: Host Your Own Webpage
+-----------------------------
+1. Go to Apache's web root directory:
+
+       cd /var/www/html
+
+2. Check the files:
+
+       ls
+
+3. Remove default Apache page:
+
+       sudo rm index.html
+
+4. Create a new custom web page:
+
+       sudo nano index.html
+
+5. Paste your HTML source code. Example:
+
+       <html>
+       <head><title>My Website</title></head>
+       <body><h1>Welcome to My Website on AWS!</h1></body>
+       </html>
+
+6. Press Ctrl+O to save, then Ctrl+X to exit.
+7. Refresh your browser. Your custom website should now display!

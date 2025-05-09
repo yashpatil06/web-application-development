@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Simple Mobile Website with Cards</title>
+    <!-- jQuery Mobile CSS -->
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"
+    />
+    <!-- jQuery and jQuery Mobile JS -->
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      .card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 10px 0;
+        background-color: #f9f9f9;
+      }
+      .card h3 {
+        margin-top: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Home Page -->
+    <div data-role="page" id="home">
+      <div data-role="header">
+        <h1>My Mobile Site</h1>
+      </div>
+
+      <div data-role="content">
+        <p>Welcome to my mobile website!</p>
+
+        <!-- Cards Section -->
+        <div class="card">
+          <h3>Latest News</h3>
+          <p>Our mobile platform just got updated with new features!</p>
+        </div>
+
+        <div class="card">
+          <h3>Upcoming Events</h3>
+          <p>Don't miss our webinar on mobile development on May 20, 2025.</p>
+        </div>
+
+        <div class="card">
+          <h3>User Tips</h3>
+          <p>Use the navigation buttons below to explore more.</p>
+        </div>
+
+        <a href="#about" class="ui-btn ui-corner-all ui-shadow">About Us</a>
+        <a href="#contact" class="ui-btn ui-corner-all ui-shadow">Contact</a>
+      </div>
+
+      <div data-role="footer">
+        <h4>&copy; 2025 My Mobile Site</h4>
+      </div>
+    </div>
+
+    <!-- About Page -->
+    <div data-role="page" id="about">
+      <div data-role="header">
+        <h1>About Us</h1>
+      </div>
+
+      <div data-role="content">
+        <div class="card">
+          <h3>Who We Are</h3>
+          <p>
+            We build responsive and modern websites using mobile-friendly
+            frameworks.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Our Mission</h3>
+          <p>
+            Delivering quality content with a focus on accessibility and
+            performance.
+          </p>
+        </div>
+
+        <a href="#home" class="ui-btn ui-corner-all ui-shadow">Back to Home</a>
+      </div>
+
+      <div data-role="footer">
+        <h4>&copy; 2025 My Mobile Site</h4>
+      </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div data-role="page" id="contact">
+      <div data-role="header">
+        <h1>Contact Us</h1>
+      </div>
+
+      <div data-role="content">
+        <form>
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter your name"
+          />
+
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email"
+          />
+
+          <label for="msg">Message:</label>
+          <textarea name="msg" id="msg" placeholder="Your message"></textarea>
+
+          <input
+            type="submit"
+            value="Send"
+            class="ui-btn ui-corner-all ui-shadow"
+          />
+        </form>
+
+        <a href="#home" class="ui-btn ui-corner-all ui-shadow">Back to Home</a>
+      </div>
+
+      <div data-role="footer">
+        <h4>&copy; 2025 My Mobile Site</h4>
+      </div>
+    </div>
+  </body>
+</html>

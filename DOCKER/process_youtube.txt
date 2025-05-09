@@ -1,0 +1,116 @@
+OPEN CMD
+optional -
+    sudo apt-get update
+    sudo apt install docker.io
+    sudousermod -aG docker $USER
+    sudo docker pull openjdk
+    jshell
+
+    sudo docker pull python
+    python3
+  
+CHECK DOCKER VERSION  = docker -v 
+CHECK DOCKER IMAGES AVALABLE = docker images 
+docker ps
+
+GET THE IMAGE - DOCKER HUB .COM 
+OPENJDK / PYTHON
+
+docker pull openjdk 
+
+docker images
+docker run --name JAVA -it -d openjdk
+docker ps
+
+docker exec -it JAVA jshell
+
+jshell>
+    //java code
+    /exit - to exit jshell
+
+docker ps
+docker stop container ID
+docker container rm container ID
+
+docker ps - //available in running state
+
+docker images 
+
+docker image prune - // remove images
+
+
+
+Microsoft Windows [Version 10.0.26100.3915]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Yash>docker -v
+Docker version 28.0.4, build b8034c0
+
+C:\Users\Yash>docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+
+C:\Users\Yash>docker pull openjdk
+Using default tag: latest
+latest: Pulling from library/openjdk
+95a27dbe0150: Pull complete
+57b698b7af4b: Pull complete
+197c1adcd755: Pull complete
+Digest: sha256:9b448de897d211c9e0ec635a485650aed6e28d4eca1efbc34940560a480b3f1f
+Status: Downloaded newer image for openjdk:latest
+docker.io/library/openjdk:latest
+
+C:\Users\Yash>docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+C:\Users\Yash>docker run --name JAVA -it -d openjdk
+3480e3c0ce63543f108a3a08ed7261824d6aa648e8b4fd12061fc73ff9aecb0f
+
+C:\Users\Yash>docker ps
+CONTAINER ID   IMAGE     COMMAND    CREATED          STATUS          PORTS     NAMES
+3480e3c0ce63   openjdk   "jshell"   12 seconds ago   Up 11 seconds             JAVA
+
+C:\Users\Yash>docker exec -it JAVA jshell
+|  Welcome to JShell -- Version 18.0.2.1
+|  For an introduction type: /help intro
+
+jshell> System.out.println("hello harshit");
+hello harshit
+
+jshell> /exit
+|  Goodbye
+
+C:\Users\Yash>docker ps
+CONTAINER ID   IMAGE     COMMAND    CREATED         STATUS         PORTS     NAMES
+3480e3c0ce63   openjdk   "jshell"   4 minutes ago   Up 4 minutes             JAVA
+
+C:\Users\Yash>docker stop 3480e3c0ce63
+3480e3c0ce63
+
+C:\Users\Yash>docker container rm 3480e3c0ce63
+3480e3c0ce63
+
+C:\Users\Yash>docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+C:\Users\Yash>docker image prune
+WARNING! This will remove all dangling images.
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
+
+C:\Users\Yash>docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+openjdk      latest    9b448de897d2   2 years ago   727MB
+
+C:\Users\Yash>docker image prune -a
+WARNING! This will remove all images without at least one container associated to them.
+Are you sure you want to continue? [y/N] y
+Deleted Images:
+untagged: openjdk:latest
+deleted: sha256:9b448de897d211c9e0ec635a485650aed6e28d4eca1efbc34940560a480b3f1f
+deleted: sha256:fe05457a5e9b9403f8e72eeba507ae80a4237d2d2d3f219fa62ceb128482a9ee
+deleted: sha256:71260f256d19f4ae5c762601e5301418d2516ca591103b1376f063be0b7ba056
+deleted: sha256:197c1adcd755131915cd019bdd58658d44445b3638f65449932c18ee39b6047c
+deleted: sha256:57b698b7af4b18900b53c768746b1dfb603dfb9aec1eea328fdac86d37001e2a
+deleted: sha256:95a27dbe0150755fca4304b4afd0d7d6dd6a40ede6fdb30da8568e9e8cdf23a9
+
+Total reclaimed space: 245.6MB

@@ -1,0 +1,47 @@
+
+GIT & GITHUB PRACTICAL: STEP-BY-STEP GUIDE
+
+✅ STEP 1: Configure Git (One-Time Setup)
+-----------------------------------------
+git config --global user.name "YourName"
+git config --global user.email "youremail@example.com"
+git init
+
+✅ STEP 2: Create a GitHub Repository
+-------------------------------------
+1. Go to https://github.com
+2. Click "New Repository"
+3. Repository Name: MyApp
+4. Keep it Public, DO NOT check "Initialize with a README"
+5. Click "Create Repository"
+
+✅ STEP 3: Check Git Status
+---------------------------
+git status
+
+✅ STEP 4: Stage Files for Commit
+---------------------------------
+git add index.html
+# or
+git add .
+
+✅ STEP 5: Commit Your Changes
+------------------------------
+git commit -m "Added index.html with basic HTML content"
+
+✅ STEP 6: Connect Local Repo to GitHub
+---------------------------------------
+git branch -M main
+git remote add origin https://github.com/your-username/MyApp.git
+
+✅ STEP 7: Push Code to GitHub
+------------------------------
+git push -u origin main
+
+✅ STEP 8: View Repository Online
+---------------------------------
+Go to https://github.com/your-username/MyApp
+
+NOTE:
+- Use personal access token instead of GitHub password when prompted
+- Replace 'your-username' with your actual GitHub username

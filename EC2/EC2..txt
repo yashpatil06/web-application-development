@@ -1,0 +1,66 @@
+Search for EC2 → Click on EC2 from Services.
+
+Click "Launch Instance".
+
+Name your instance: e.g., StaticWebsiteServer
+
+Select Amazon Machine Image (AMI):
+
+Choose Amazon Linux 2 AMI (Free Tier eligible).
+
+Instance Type:
+Choose t2.micro (Free Tier eligible).
+
+Key Pair (Login):
+
+Select an existing key pair or create a new one (e.g., my-key.pem).
+
+Network Settings:
+
+Allow SSH, HTTP (port 80) and HTTPS (optional).
+
+Choose Allow traffic from anywhere (0.0.0.0/0) for HTTP.
+
+Storage:
+
+Keep default (8 GB).
+
+Click Launch Instance.
+
+🌐 Step 2: Connect to Your EC2 Instance
+Go to EC2 > Instances
+
+Select your instance → Click Connect
+
+Use EC2 Instance Connect (browser) OR
+
+Click "Connect" at the bottom of the screen
+This will open a terminal in your browser to your EC2 instance.
+
+
+ Step 2: Install Apache Web Server
+Once you're in the EC2 terminal, run:
+
+
+    sudo yum update -y
+    sudo yum install httpd -y
+    sudo systemctl start httpd
+    sudo systemctl enable httpd
+
+
+Make /var/www/html Writable:
+
+    sudo chmod 777 /var/www/html
+
+Step 4: Create a Web Page
+
+    nano /var/www/html/index.html
+
+Then paste your HTML code (like your registration form and table), and save it:
+
+Press Ctrl + O, then Enter to save
+Press Ctrl + X to exit
+
+
+Visit your instance in the browser using:
+http://43.204.100.254

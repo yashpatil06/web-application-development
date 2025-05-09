@@ -1,0 +1,104 @@
+
+WordPress Deployment on Ubuntu (focal64) using Vagrant
+
+1. Initiate the VM
+------------------
+Use the `focal64` box.
+edit Vagrent file for first :
+   config.vm.network "forwarded_port", guest: 80, host: 8080
+   config.vm.network "public_network"
+   config.vm.synced_folder ".", "/var/www/html"
+   config.vm.provision "shell", inline: <<-SHELL
+     apt-get update
+     apt-get install -y apache2
+   SHELL
+
+
+Edit Vagrantfile for wordpress:
+  config.vm.network "private_network", ip: "192.168.56.33"
+  config.vm.network "public_network"
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1800"
+  end
+Save the file.
+
+2. Start and Access the VM
+--------------------------
+vagrant up
+vagrant ssh
+
+3. Change Hostname
+------------------
+sudo -i
+vi /etc/hostname
+# Press 'i', replace content with:
+wordpress
+# Press ESC, then type: :wq!
+hostname wordpress
+vi /etc/hosts
+# Add or edit the line:
+127.0.1.1    wordpress
+# Press ESC, then type: :wq!
+hostnamectl
+exit
+clear
+
+4. Update & Install Packages
+----------------------------
+sudo apt update
+sudo apt install apache2 ghostscript libapache2-mod-php mysql-server php php-bcmath php-curl php-imagick php-intl php-json php-mbstring php-mysql php-xml php-zip -y
+
+5. Install WordPress
+--------------------
+sudo mkdir -p /srv/www
+sudo chown www-data: /srv/www
+curl https://wordpress.org/latest.tar.gz | sudo -u www-data tar zx -C /srv/www
+
+6. Apache Configuration
+------------------------
+sudo vi /etc/apache2/sites-available/wordpress.conf
+# Paste inside the file:
+<VirtualHost *:80>
+    DocumentRoot /srv/www/wordpress
+    <Directory /srv/www/wordpress>
+        Options FollowSymLinks
+        AllowOverride Limit Options FileInfo
+        DirectoryIndex index.php
+        Require all granted
+    </Directory>
+    <Directory /srv/www/wordpress/wp-content>
+        Options FollowSymLinks
+        Require all granted
+    </Directory>
+</VirtualHost>
+# Save and exit: ESC then :wq!
+sudo a2ensite wordpress
+sudo a2enmod rewrite
+sudo a2dissite 000-default
+sudo service apache2 reload
+
+7. Configure MySQL Database
+----------------------------
+sudo mysql -u root
+CREATE DATABASE wordpress;
+CREATE USER wordpress@localhost IDENTIFIED BY 'admin';
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER ON wordpress.* TO wordpress@localhost;
+FLUSH PRIVILEGES;
+exit
+
+8. Configure WordPress DB Connection
+-------------------------------------
+sudo -u www-data cp /srv/www/wordpress/wp-config-sample.php /srv/www/wordpress/wp-config.php
+sudo -u www-data sed -i 's/database_name_here/wordpress/' /srv/www/wordpress/wp-config.php
+sudo -u www-data sed -i 's/username_here/wordpress/' /srv/www/wordpress/wp-config.php
+sudo -u www-data sed -i 's/password_here/admin/' /srv/www/wordpress/wp-config.php
+sudo -u www-data vi /srv/www/wordpress/wp-config.php
+# Delete lines with 'put your unique phrase here'
+# Visit https://api.wordpress.org/secret-key/1.1/salt/ and paste the new keys
+# Save and exit with :wq!
+
+9. Access WordPress in Browser
+------------------------------
+ip addr show
+# Find the inet IP (e.g., 192.168.56.33)
+# Visit http://<IP> in browser to complete WordPress setup

@@ -1,0 +1,138 @@
+1 - OBJECTS
+     FIELDS
+     validation
+     TABS
+2 - App
+    APP MAMGER - CREATE NEW LIGHTING APP
+    
+3 -REPORT
+
+🔷 Object: Patient__c
+1. Valid Phone Format (10-digit)
+Rule Name: Valid_Phone_Format
+Formula:
+
+plaintext
+Copy code
+
+    NOT(REGEX(Phone__c, "^[0-9]{10}$"))
+
+Error Message: "Phone number must be exactly 10 digits."
+Error Location: Phone__c
+
+2. DOB Cannot Be in the Future
+Rule Name: DOB_Cannot_Be_Future
+Formula:
+
+plaintext
+Copy code
+
+    DOB__c > TODAY()
+
+Error Message: "Date of Birth cannot be in the future."
+Error Location: DOB__c
+
+3. Registration Date Must Be Today or Earlier
+Rule Name: Registration_Date_Not_Future
+Formula:
+
+plaintext
+Copy code
+
+    Registration_Date__c > TODAY()
+
+Error Message: "Registration date cannot be in the future."
+Error Location: Registration_Date__c
+
+🔷 Object: Appointment__c
+4. Appointment Date Cannot Be in the Past
+Rule Name: Appointment_Date_Validation
+Formula:
+
+plaintext
+Copy code
+
+    Appointment_Date__c < NOW()
+
+Error Message: "Appointment date and time cannot be in the past."
+Error Location: Appointment_Date__c
+
+5. Reason for Visit Required
+Note: This is typically handled by making the field Required at the field level. But if you want to use a validation rule, here’s how:
+
+Rule Name: Reason_Required
+Formula:
+
+plaintext
+Copy code
+
+    ISBLANK(Reason__c)
+
+Error Message: "Please enter a reason for the visit."
+Error Location: Reason__c
+
+
+REPORT
+
+🧩 Step 1: Create a Custom Report Type
+This allows you to join both objects (like Patient__c and related Appointment__c) in a single report.
+
+➤ Navigation:
+Setup ➝ Report Types ➝ New Custom Report Type
+
+➤ Fill the Details:
+Field	                Value
+Primary Object	    Patient__c
+Report Type Label	Patients with Appointments
+Report Type Name	Patients_with_Appointments
+Store in Category	Other Reports or create a new category
+Deployment Status	Deployed
+Description	        Report showing patients and their associated appointments
+
+➤ Add Child Object:
+Object: Appointment__c
+
+Relationship: Each "A" record may or may not have related "B" records (depending on your preference)
+
+
+
+📊 Step 2: Create the Report Using Report Builder
+➤ Navigation:
+Reports ➝ New Report ➝ Select Patients with Appointments (custom report type) ➝ Continue
+
+🧾 Step 3: Add Fields to Report
+➤ Recommended Fields:
+From Patient__c:
+
+First_Name__c
+Email__c
+Phone__c
+DOB__c
+Registration_Date__c
+Gender__c
+
+From Appointment__c:
+
+Appointment_Date__c
+Reason__c
+Status__c
+Doctor_Name__c
+
+🛠️ Step 4: Apply Filters
+You can add filters as per your reporting needs. For example:
+
+Appointment Status = Scheduled
+Appointment Date = This Week
+Patient Gender = Male / Female
+
+📁 Step 5: Save & Run Report
+Click on Save & Run
+
+Name the report: "Hospital Appointments Report"
+Choose a folder (e.g., "Hospital Management Reports")
+Click Save
+
+📸 Optional: Add Chart or Summary
+Click on the "Add Chart" option to include a bar chart, pie chart, etc.
+
+Use groupings (e.g., Status__c, Gender__c) to visualize trends.

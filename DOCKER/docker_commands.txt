@@ -1,0 +1,53 @@
+
+Docker Conceptual Command Explanation
+=====================================
+
+Docker Installation (Ubuntu)
+-----------------------------
+1. sudo apt update
+   - Updates the list of available packages and versions.
+
+2. sudo apt install docker.io
+   - Installs Docker engine from Ubuntu’s repository.
+
+Docker Image Management
+------------------------
+3. sudo docker images
+   - Lists all Docker images available locally.
+   - Think of images as blueprints for containers.
+
+Java Programming in Docker
+---------------------------
+4. sudo docker pull openjdk
+   - Downloads the official OpenJDK (Java) Docker image.
+
+5. sudo docker run -it --name java-env openjdk
+   - Creates and starts a new container using the OpenJDK image.
+   - -it: interactive + terminal
+   - --name java-env: Names the container for easy reference
+
+6. jshell
+   - Starts the Java shell (REPL) to test Java code interactively.
+
+7. /exit
+   - Exits the Java shell but remains inside the container.
+
+8. exit
+   - Exits the container shell and returns to the host system.
+
+Python Programming in Docker
+-----------------------------
+9. sudo docker pull python:3
+   - Pulls the official Python 3 image.
+
+10. sudo docker run -it --name python-env python:3
+    - Creates and starts a Python container named python-env.
+
+11. python3
+    - Starts the Python interpreter (REPL) inside the container.
+
+12. exit()
+    - Exits the Python interpreter.
+
+13. exit
+    - Leaves the Docker container shell, returning to host terminal.
